@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <script>
+        // Задание 2
+        'use strict';
+
+        let basket = [{ name: 'iPhone', amount: 1, price: 500 }];
+
+        basket.push({ name: 'Samsung', amount: 2, price: 400 });
+
+        basket.push({ name: 'Xiaomi', amount: 1, price: 300 });
+
+        basket.push({ name: 'Nokia', amount: 3, price: 200 });
+
+
+        function countBasketPrice(arr) {
+            let total = 0;
+
+            for (let i = 0; i < arr.length; i++) {
+                let subtotal = arr[i].price * arr[i].amount; // подитог по данной позиции
+                console.log(`Название: ${arr[i].name}; Кол-во: ${arr[i].amount}; Цена: ${arr[i].price}; Стоимость: ${subtotal}`); // выводим для наглядного контроля
+                total += subtotal;
+            }
+
+            return total;
+
+        }
+
+        console.log(`ИТОГО: ${countBasketPrice(basket)}`);
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

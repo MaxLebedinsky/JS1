@@ -7,59 +7,17 @@
     <script>
         // Задание 4
         'use strict';
-
-        let a = 7;
-        let result = "";
-        switch (a) {
-            case 0:
-                result += a + ', ';
-                a++;
-            case 1:
-                result += a + ', ';
-                a++;
-            case 2:
-                result += a + ', ';
-                a++;
-            case 3:
-                result += a + ', ';
-                a++;
-            case 4:
-                result += a + ', ';
-                a++;
-            case 5:
-                result += a + ', ';
-                a++;
-            case 6:
-                result += a + ', ';
-                a++;
-            case 7:
-                result += a + ', ';
-                a++;
-            case 8:
-                result += a + ', ';
-                a++;
-            case 9:
-                result += a + ', ';
-                a++;
-            case 10:
-                result += a + ', ';
-                a++;
-            case 11:
-                result += a + ', ';
-                a++;
-            case 12:
-                result += a + ', ';
-                a++;
-            case 13:
-                result += a + ', ';
-                a++;
-            case 14:
-                result += a + ', ';
-                a++;
-            case 15:
-                result += a;
+        let rows = +prompt('Введите кол-во рядов: ');
+        let xstring = '';
+        for (let i = 1; i <= rows; i++) {
+            for (let j = 1; j <= i; j++) {
+                xstring += 'x';
+            }
+            console.log(xstring);
+            xstring = ''; // обнуление строки для следующей итерации
         }
-        alert(result);
+
+
     </script>
 </head>
 
