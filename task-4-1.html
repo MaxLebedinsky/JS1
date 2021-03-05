@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        'use strict';
+
+        let emptyNumber = {
+            ones: null,
+            tens: null,
+            hundreds: null,
+            wrongNumber: function () {
+                console.log('Введённое значение не является числом от 0 до 999');
+            }
+        }
+
+        function NumberToObject(number) {
+            if ((number >= 0) && (number <= 999)) { // заполняем свойства объекта только если число от 0 до 999
+                this.ones = number % 10;
+                this.tens = Math.floor(number % 100 / 10);
+                this.hundreds = Math.floor(number % 1000 / 100);
+                return number;
+            }
+            this.wrongNumber(); // если число не попадает в диапазон от 0 до 999 – выводим сообщение
+            return number; // свойства заполняются "пустотой" из прототипа
+        }
+
+        NumberToObject.prototype = emptyNumber;
+
+        let number = +prompt('Введите число от 0 до 999: ');
+
+        number = new NumberToObject(number); // передаём число, возвращаем объект
+
+        console.log(`Единицы: ${number.ones}  Десятки: ${number.tens}  Сотни: ${number.hundreds}`); // выводим в виде строки
+        console.log(number); // выводим в виде объекта
+
+    </script>
+</body>
+
+</html>
