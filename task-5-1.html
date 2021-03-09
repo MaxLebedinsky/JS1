@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chess Board</title>
+    <link rel="stylesheet" href="style-chess.css">
+</head>
+
+<body>
+    <!-- Задание 1 -->
+    <div id="chessBoard">
+
+    </div>
+
+    <script>
+        "use strict";
+
+        function createChessBoard() {
+            let square;
+            let paintItBlack = false; // верхняя левая клетка - белая
+            let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
+            let board = document.getElementById("chessBoard");
+            board.className = "board";
+
+            for (let i = 8; i >= 1; i--) { // создаём строки по 8 клеток
+                square = document.createElement("div"); // в начале каждой строки ставим её номер
+                square.className = "square text";
+                square.innerHTML = i;
+                board.appendChild(square);
+
+                for (let j = 1; j <= 8; j++) { // заполняем строку клетками
+
+                    square = document.createElement("div");
+                    if (paintItBlack) {
+                        square.className = "square black";
+                    } else {
+                        square.className = "square white";
+                    }
+
+                    board.appendChild(square);
+
+                    paintItBlack = !paintItBlack; // инвертируем цвет для следующей клетки
+                }
+                paintItBlack = !paintItBlack; // перед началом каждой строки ещё раз инвертируем цвет
+            }
+
+            square = document.createElement("div"); // само поле и цифры уже сгенерированы; ставим пустой квадрат в левый нижний угол, чтобы буква А была под первой нижней клеткой
+            square.className = "square text";
+            board.appendChild(square);
+
+            for (let i = 0; i <= 7; i++) { // подписываем буквы под клетками
+                square = document.createElement("div");
+                square.className = "square text";
+                square.innerHTML = letters[i];
+                board.appendChild(square);
+            }
+        }
+
+        createChessBoard();
+    </script>
+</body>
+
+</html>

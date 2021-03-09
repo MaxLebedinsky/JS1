@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Basket on JS</title>
+    <link rel="stylesheet" href="style-basket.css">
+</head>
+
+<body>
+    <!-- Задание 2 -->
+    <div id="basket">
+
+    </div>
+
+    <script>
+        'use strict';
+
+        let commonProduct = { // общий прототип продукта
+            name: '', // название
+            code: 0, // артикул
+            category: '', // категория товара
+            price: 0, // розничная цена
+            businessPrice: 0, // оптовая цена
+            stock: 10, // остаток на складе
+            available: true, // доступность к покупке
+            mainPic: '', // ссылка на основную картинку
+            pics: [], // массив ссылок на доп. картинки
+            description: '', // описание товара
+            discount: 0, // скидка (по умолчанию - 0%)
+            amount: 0, // кол-во в корзине
+            actionPrice: function () { // подсчёт акционной цены (со скидкой)
+                return this.price / 100 * (100 - this.discount)
+            }
+
+        }
+
+        function CreateProduct(product) { // создание продукта с основными свойствами
+            this.name = product.name;
+            this.code = product.code;
+            this.price = product.price;
+        }
+
+        CreateProduct.prototype = commonProduct;
+
+        let basketLine;
+
+        let basket = { // объект корзины
+            items: [], // массив позиций корзины
+
+            addItem: function (product) { // добавление товара в корзину
+                this.items.push(product);
+            },
+
+            displaySubtotals: function () { // вывод содержимого корзины с подытогами по позициям, с учётом скидок; запись подытогов
+
+                for (let i = 0; i < basket.items.length; i++) {
+                    basket.items[i].subtotal = basket.items[i].actionPrice() * basket.items[i].amount; // подытог по данной позиции
+                    basketLine = document.createElement("div");
+                    basketLine.className = "basket-line";
+                    basketLine.innerHTML = `Название: ${basket.items[i].name}; Кол-во: ${basket.items[i].amount}; Цена: ${basket.items[i].price}; Скидка: ${basket.items[i].discount}%;  Стоимость: ${basket.items[i].subtotal}`;
+                    basketContainer.appendChild(basketLine);
+                }
+            },
+
+            countBasketPrice: function () {
+                let total = 0;
+
+                for (let i = 0; i < basket.items.length; i++) {
+                    total += basket.items[i].subtotal;
+                }
+
+                return total;
+            },
+
+            countBasketAmount: function () { // подсчёт кол-ва товаров в корзине
+                let totalAmount = 0;
+                for (let i = 0; i < basket.items.length; i++) {
+                    totalAmount += basket.items[i].amount;
+                }
+                return totalAmount;
+            }
+        };
+
+        let product1 = { name: 'Burton X', code: 'brtn-234-018', price: 500 };
+        let product2 = { name: 'Rossignol', code: 'rsgnl-14-2673', price: 300 };
+        let product3 = { name: 'Capita', code: 'cpt-65-14', price: 400 };
+
+        product1 = new CreateProduct(product1); // создаём экземпляры продуктов с прототипом от функции-конструктора
+        product2 = new CreateProduct(product2);
+        product3 = new CreateProduct(product3);
+
+        product1.discount = 10; // для этого продукта прописали скидку 10%; для остальных она прописана в прототипе - 0%
+
+        product1.amount = 2; // допустим, в корзину попало столько единиц товара
+        product2.amount = 1;
+        product3.amount = 3;
+
+        basket.addItem(product1); // добавляем товары в корзину
+        basket.addItem(product2);
+        basket.addItem(product3);
+
+        let basketContainer = document.getElementById("basket");
+        let basketTitle = document.createElement("h2");
+        basketTitle.innerHTML = "Корзина";
+        basketContainer.appendChild(basketTitle);
+
+        let basketTotalLine = document.createElement("div");
+        basketTotalLine.className = "basket-total-line";
+
+        if (basket.items.length > 0) { // если в корзине есть хотя бы один товар
+            basket.displaySubtotals(); // выводим содержимое корзины с подытогами
+
+            basketTotalLine.innerHTML = `В корзине: ${basket.countBasketAmount()} товаров на сумму ${basket.countBasketPrice()} рублей`; // и формируем итоговую строку корзины
+        } else {
+            basketTotalLine.innerHTML = "Корзина пуста";
+        }
+
+        basketContainer.appendChild(basketTotalLine); // выводим итоговую строку корзины
+
+    </script>
+
+</body>
+
+</html>
